@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Phone data</title>
+</head>
+<body>
+
+</body>
+<script>
+var rate = 200;
+var orientation1 = [1,2,3];
+function updateOrientation(x,y,z){
+	var http = new XMLHttpRequest();
+    http.open('POST','/update',true);
+    var params =  'xOrientation='+x+'&yOrientation='+y+'&zOrientation='+z;
+    http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    http.onload = function(){
+    }
+    http.send(params);
+}
+/*window.addEventListener('deviceorientation', handleOrientation);
+
+function handleOrientation(event){
+	orientation[0] = event.alpha;
+	orientation[1] = event.beta;
+	orientation[2] = event.gamma;
+}*/
+window.addEventListener('deviceorientation', function(event) {
+	orientation1[0] = event.alpha;
+	orientation1[1] = event.beta;
+	orientation1[2] = event.gamma;
+  console.log(event.alpha + ' : ' + event.beta + ' : ' + event.gamma);
+});
+function loop(){
+	document.body.innerHTML = orientation1[0].toFixed(2)+","+orientation1[1].toFixed(2)+","+orientation1[2].toFixed(2);
+	updateOrientation(orientation1[0],orientation1[1],orientation1[2]);
+	setTimeout(loop,rate);
+}
+loop();
+</script>
+</html>
